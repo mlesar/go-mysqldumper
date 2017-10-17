@@ -64,12 +64,7 @@ Values in the config are used in the following order:
 }
 ```
 
-## Usage - dump to file
-```
-
-```
-
-## Usage - dump to another database
-```
-
-```
+## Usage
+ - [dump to a file](examples/file-dumper/main.go)
+ - [dump to Stdout](examples/stdout-dumper/main.go)
+ - [dump to another database](examples/db-dumper/main.go) *IMPORTANT*: `multiStatements` must be enabled
