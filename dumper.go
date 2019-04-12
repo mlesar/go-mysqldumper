@@ -139,6 +139,11 @@ func (s *Dumper) DumpData(w DumpWriter, tables *Tables) error {
 func (s *Dumper) GetDefinitions() (*Tables, error) {
 	list := &Tables{}
 
+	_, err := s.db.Exec("SET SESSION group_concat_max_len = 1000000;")
+	if err != nil {
+		return nil, err
+	}
+
 	sqlQuery := `
 		SELECT 
 			t.table_name,
