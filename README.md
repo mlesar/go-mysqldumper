@@ -22,7 +22,7 @@ Currently, it supports dumping tables and views.
    - `gt` - value can be any that is acceptable by the `humanize.ParseBigBytes` ([link](https://github.com/dustin/go-humanize/blob/master/bigbytes.go))
    - `filters` - `key` can be table name or you can specify column name by placing the `*.` before column name and `value` is a filter (for examle: `"*.id": "ORDER BY id DESC LIMIT 30"`)
  - `replacements` - `key` consists of the table and column name and `value` is a replacement for the real value (for example: `"users.password": "MD5('123456')"`). So you can, for example, hide sensitive data if you are dumping the DB for the developers to use.
- - `filters` - `key` is table name and `value` is one of the following: `[onlydata, nodata, ignore]` (for example: `"logs": "nodata"`)
+ - `filters` - `key` is table name and `value` is one of the following: `[onlydata, nodata, ignore]` (for example: `"logs": "nodata"`) You can also use `*` as a `key` by which the filter will be applied to all tables that do not match any other filter.
 
 Values in the config are used in the following order:
 1. table name is checked for existence in the `filters` part of the config. If table name exists and the value is:

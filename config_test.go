@@ -30,7 +30,8 @@ var sampleConfig = `
     "filters": {
         "table1": "onlydata",
 		"table2": "nodata",
-        "table3": "ignore"
+		"table3": "ignore",
+		"*": "onlydata"
     }
 }
 `
@@ -73,6 +74,21 @@ func TestDumFilter(t *testing.T) {
 
 		filter = dumper.GetDumpFilter(Table{Name: "table3"})
 		So(filter, ShouldEqual, "LIMIT 0")
+
+		filter = dumper.GetDumpFilter(Table{Name: "table4"})
+		So(filter, ShouldEqual, "")
+
+		canDump := dumper.CanDumpDefinition("table1")
+		So(canDump, ShouldBeFalse)
+
+		canDump = dumper.CanDumpDefinition("table2")
+		So(canDump, ShouldBeTrue)
+
+		canDump = dumper.CanDumpDefinition("table3")
+		So(canDump, ShouldBeFalse)
+
+		canDump = dumper.CanDumpDefinition("table4")
+		So(canDump, ShouldBeFalse)
 
 		columns := dumper.GetDumpColumns(Table{Name: "users", Columns: &Columns{"id", "name", "password"}})
 		So(columns, ShouldEqual, "`id`,`name`,MD5('123456') AS `password`")

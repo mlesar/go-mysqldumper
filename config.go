@@ -33,10 +33,10 @@ func (s *Config) CanDumpDefinition(tableName string) bool {
 
 	filter, ok := s.Filters[tableName]
 	if !ok {
-		return true
+		filter, ok = s.Filters["*"]
 	}
 
-	return !(filter == TABLE_FILTER_IGNORE || filter == TABLE_FILTER_ONLYDATA)
+	return !ok || !(filter == TABLE_FILTER_IGNORE || filter == TABLE_FILTER_ONLYDATA)
 }
 
 func (s *Config) GetDumpColumns(table Table) string {
@@ -58,6 +58,9 @@ func (s *Config) GetDumpColumns(table Table) string {
 func (s *Config) GetDumpFilter(table Table) string {
 	if s.Filters != nil {
 		filter, ok := s.Filters[table.Name]
+		if !ok {
+			filter, ok = s.Filters["*"]
+		}
 		if ok && (filter == TABLE_FILTER_IGNORE || filter == TABLE_FILTER_NODATA) {
 			return "LIMIT 0"
 		}
