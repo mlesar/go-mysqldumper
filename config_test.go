@@ -19,8 +19,8 @@ var sampleConfig = `
     "size": {
 		"gt": "10 MiB",
 		"filters": {
-            "*.id": "ORDER BY id DESC LIMIT 30",
-            "*.created_at": "ORDER BY created_at DESC LIMIT 30",
+			"*.id": "ORDER BY id DESC LIMIT 30",
+			"*.created_at": "ORDER BY created_at DESC LIMIT 30",
 			"items": "LIMIT 10"
 		}
 	},
