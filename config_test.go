@@ -28,7 +28,7 @@ var sampleConfig = `
         "users.password": "MD5('123456')"
     },
     "filters": {
-        "table1": "onlydata",
+		"table1": "onlydata",
 		"table2": "nodata",
 		"table3": "ignore",
 		"*": "onlydata"
@@ -123,5 +123,11 @@ func TestDumFilter(t *testing.T) {
 
 		filter = dumper.GetDumpFilter(Table{Name: "table3"})
 		So(filter, ShouldEqual, "")
+
+		filter = dumper.GetDumpFilter(Table{Name: "table4"})
+		So(filter, ShouldEqual, "")
+
+		columns := dumper.GetDumpColumns(Table{Name: "users", Columns: &Columns{"id", "name", "password"}})
+		So(columns, ShouldEqual, "`id`,`name`,`password`")
 	})
 }
